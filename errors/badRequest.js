@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { badRequest } = require('./errorCodes');
 
 class BadRequest extends Error {

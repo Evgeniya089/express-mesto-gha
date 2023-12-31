@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const express = require('express');
 const usersRouter = require('./users');
 const cardsRouter = require('./cards');

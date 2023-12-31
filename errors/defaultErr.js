@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = ((err, req, res, next) => {
   const { statusCode = 500, message } = err;
 

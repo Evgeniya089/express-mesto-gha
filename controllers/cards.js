@@ -1,8 +1,11 @@
+/* eslint-disable no-undef */
 const cardSchema = require('../models/card');
 const Forbidden = require('../errors/forbidden');
+// eslint-disable-next-line no-undef
 const NotFound = require('../errors/notFound');
 const BadRequest = require('../errors/badRequest');
 
+// eslint-disable-next-line no-undef
 module.exports.getAllCards = (req, res, next) => {
   cardSchema
     .find({})
@@ -30,6 +33,7 @@ module.exports.createCard = (req, res, next) => {
     });
 };
 
+// eslint-disable-next-line no-undef
 module.exports.deleteCard = (req, res, next) => {
   const { cardId } = req.params;
 
@@ -71,6 +75,7 @@ module.exports.likeCard = (req, res, next) => {
     .catch(next);
 };
 
+// eslint-disable-next-line no-undef
 module.exports.dislikeCard = (req, res, next) => {
   const id = req.user._id;
   const { cardId } = req.params;

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const mongoose = require('mongoose');
 const isEmail = require('validator/lib/isEmail');
 const { urlRegExp } = require('../middlewares/validation');

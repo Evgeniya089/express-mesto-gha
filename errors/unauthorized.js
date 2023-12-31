@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 const { unauthorized } = require('./errorCodes');
 
 class Unauthorized extends Error {
@@ -6,4 +7,5 @@ class Unauthorized extends Error {
     this.statusCode = unauthorized;
   }
 }
+// eslint-disable-next-line no-undef
 module.exports = Unauthorized;

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 const { notFound } = require('./errorCodes');
 
 class NotFound extends Error {
@@ -6,4 +7,5 @@ class NotFound extends Error {
     this.statusCode = notFound;
   }
 }
+// eslint-disable-next-line no-undef
 module.exports = NotFound;

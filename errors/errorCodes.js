@@ -8,4 +8,5 @@ const ERR_CODES = {
   forbidden: 403,
 };
 
+// eslint-disable-next-line no-undef
 module.exports = ERR_CODES;
