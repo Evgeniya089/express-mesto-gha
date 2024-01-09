@@ -15,6 +15,8 @@ const cors = require('./middlewares/cors');
 
 const app = express();
 
+mongoose.connect('mongodb://localhost:27017/mestodb');
+
 app.use(helmet());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -63,8 +65,6 @@ app.use((req, res, next) => {
 });
 
 app.use(defaultErr);
-
-mongoose.connect('mongodb://localhost:27017/mestodb');
 
 app.listen(3000, () => {
   console.log('server started on port 3000');
