@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -9,6 +10,8 @@ const ConflictErr = require('../errors/conflict');
 const NotFound = require('../errors/notFound');
 const Unauthorized = require('../errors/unauthorized');
 const BadRequest = require('../errors/badRequest');
+
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getUsers = (req, res, next) => {
   userSchema
@@ -90,7 +93,7 @@ module.exports.login = (req, res, next) => {
           }
           const token = jwt.sign(
             { _id: user._id },
-            'some-secret-key',
+            NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
             { expiresIn: '7d' },
           );
           return res.send({ token });

@@ -10,12 +10,22 @@ const NotFound = require('./errors/notFound');
 const router = require('./routes');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+const cors = require('./middlewares/cors');
 
 const app = express();
 
 app.use(helmet());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(requestLogger);
+app.use(cors);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.post(
   '/signin',
@@ -46,6 +56,7 @@ app.post(
 
 app.use(auth);
 app.use(router);
+app.use(errorLogger);
 app.use(errors());
 app.use((req, res, next) => {
   next(new NotFound('Порта не существует'));
