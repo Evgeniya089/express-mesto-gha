@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -13,12 +14,13 @@ const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
 
+const { PORT = 3000 } = process.env;
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/mestodb');
+mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 
 app.use(helmet());
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(requestLogger);
 app.use(cors);
@@ -28,18 +30,6 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
-
-app.post(
-  '/signin',
-  celebrate({
-    body: Joi.object()
-      .keys({
-        email: Joi.string().required().email(),
-        password: Joi.string().required(),
-      })
-  }),
-  login
-);
 
 app.post(
   '/signup',
@@ -56,16 +46,30 @@ app.post(
   createUser
 );
 
+app.post(
+  '/signin',
+  celebrate({
+    body: Joi.object()
+      .keys({
+        email: Joi.string().required().email(),
+        password: Joi.string().required(),
+      })
+  }),
+  login
+);
+
 app.use(auth);
 app.use(router);
-app.use(errorLogger);
-app.use(errors());
+
 app.use((req, res, next) => {
   next(new NotFound('Порта не существует'));
 });
 
+app.use(errorLogger);
+app.use(errors());
+
 app.use(defaultErr);
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log('server started on port 3000');
 });
